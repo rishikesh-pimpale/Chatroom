@@ -6,10 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatroom</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-    <h1>Hello, World!</h1>
+    <div class="container">
+        <div class="jumbotron my-2">
+            <h1 class="display-4 my-2">Send Message</h1>
+            <input id="name" type="text" class="form-control my-2" placeholder="Name">
+            <textarea id="message" type="text" class="form-control my-2" placeholder="Message"></textarea>
+            <button id="send" class="btn btn-success my-2">Send</button>
+        </div>
+        <div id="messages"></div>
+    </div>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        const addMessage = function (message) {
+            $('#messages').append(`
+                <h4>${message.name}</h4> <p>${message.message}</p>`);
+        };
+
+        $(() => {
+
+            addMessage({
+                name: 'Admin',
+                message: 'Welcome to the chatroom!'
+            });
+
+            $('#send').click(() => {
+                let message = {
+                    name: $('#name').val(),
+                    message: $('#message').val()
+                };
+                addMessage(message);
+            });
+        });
+    </script>
 </body>
 
 </html>
