@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -60,11 +61,11 @@ io.on('connection', (socket) => {
     console.log('A user connected');
 });
 
-const { dbUrl } = require('./config.js');
+const dbUrl = process.env.dbUrl ?? require('./config.js').dbUrl;
 mongoose.connect(dbUrl, (err) => {
     console.log('MongoDB connection', err);
 });
 
-const server = http.listen(3000, () => {
-    console.log('Server started on port', server.address().port);
+http.listen(port, () => {
+    console.log(`Server started on port ${port}`);
 });
