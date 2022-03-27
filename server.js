@@ -29,14 +29,20 @@ app.get('/messages', (req, res) => {
         });
 });
 
+const sanitize = require('./util.js');
+
 const Filter = require('bad-words');
 const filter = new Filter();
 
 app.post('/messages', async (req, res) => {
 
     try {
-        
+
         let message = new Message(req.body);
+
+        // sanitize text to prevent XSS
+        message.name = sanitize(message.name);
+        message.message = sanitize(message.message);
 
         // filter bad words
         message.name = filter.clean(message.name);

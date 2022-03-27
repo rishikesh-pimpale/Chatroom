@@ -7,3 +7,5 @@ const sanitize = (text) => {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
 }
+
+module.exports = sanitize;
