@@ -29,25 +29,24 @@ app.get('/messages', (req, res) => {
         });
 });
 
+const Filter = require('bad-words');
+const filter = new Filter();
+
 app.post('/messages', async (req, res) => {
 
     try {
-
+        
         let message = new Message(req.body);
+
+        // filter bad words
+        message.name = filter.clean(message.name);
+        message.message = filter.clean(message.message);
 
         await message.save();
         console.log("Message saved");
 
-        let censored = await Message.findOne({ message: 'badword' });
-
-        if (censored) {
-            await Message.deleteOne({ _id: censored.id });
-        }
-        else {
-            io.emit('message', req.body);
-        }
+        io.emit('message', message);
         res.sendStatus(200);
-
     } catch (err) {
         console.log(err);
         res.sendStatus(500);

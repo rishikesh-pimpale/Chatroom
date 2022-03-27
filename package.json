@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rishikesh-pimpale/Chatroom#readme",
   "dependencies": {
+    "bad-words": "^3.0.4",
     "body-parser": "^1.19.2",
     "bootstrap": "^5.1.3",
     "express": "^4.17.3",
